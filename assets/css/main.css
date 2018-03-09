@@ -1,0 +1,188 @@
+
+.ignet-modal {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.ignet-modal-content {
+	padding: 0;
+	border-radius: 20px;
+	overflow: hidden;
+	background-color: #fefefe;
+	margin: 7% auto;
+	border: 1px solid #888;
+	width: 80%;
+	position: relative;
+}
+
+.ignet-modal-content .fastery-balloon-block {
+	text-align: center;
+}
+
+.ignet-modal-content .fastery-btn {
+	background: #ffcf4e;
+	font-weight: 700;
+	border-radius: 5px;
+	padding: 8px 25px;
+}
+
+.ignet-modal-content .map-header {
+	margin: 12px 0 10px 0;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.ignet-modal-content .point-phone {
+	margin-bottom: 6px;
+	color: #756d6d;
+}
+
+.ignet-modal-content .point-cost {
+	color: #756d6d;
+	margin: 0 0 18px 0;
+}
+
+.ignet-close-modal-inner {
+	height: 35px;
+	position: absolute;
+	top: 15px;
+	right: 25px;
+	z-index: 999;
+	width: 35px;
+	margin: 0;
+	background: #fff;
+	border-radius: 25px;
+}
+
+.ignet-range-block .range-min,
+.ignet-range-block .range-max {
+	display: inline-block;
+}
+
+.ignet-range-block .range-input {
+	position: relative;
+	display: inline-block;
+	width: 60%;
+	margin: 0 5% 0 5%;
+}
+
+.ignet-range-block {
+	position: absolute;
+	bottom: 14%;
+	right: 8%;
+	z-index: 999;
+	width: 35%;
+	padding: 20px 20px 20px 20px;
+	background: rgba(255,255,255,0.89);
+	border-radius: 16px;
+	text-align: center;
+}
+
+.ignet-close-modal {
+	color: #3f3c3c;
+	font-size: 33px;
+	position: absolute;
+	top: -10px;
+	right: 8px;
+}
+
+.ignet-close-modal:hover,
+.ignet-close-modal:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#ignet-open-map {
+	color: #96588a;
+	cursor: pointer;
+}
+
+#ignet-open-map:hover {
+	color: #4c3949;
+}
+
+.wc-proceed-to-checkout .checkout-button-disabled {
+	opacity: 0.5;
+	cursor: no-drop;
+}
+.wc-proceed-to-checkout .button {
+	margin-bottom: 7px!important;
+}
+.wc-proceed-to-checkout .chekout-error-notice {
+	color: #D02C21;
+	text-align: center;
+}
+.ignet_fastery_uid_hidden {
+
+	display: none!important;
+}
+
+
+/* Контейнер слайдера */
+.ui-slider {
+	position: relative;
+}
+
+/* Ползунок */
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 19px;
+	height: 19px;
+	border: 2px solid #1e98ff;
+	background: #fff;
+	border-radius: 15px;
+	cursor: pointer;
+	outline: none;
+}
+.ui-slider .ui-slider-range {
+	position: absolute;
+	z-index: 1;
+	font-size: .7em;
+	display: block;
+	border: 0;
+	overflow: hidden;
+}
+/* горизонтальный слайдер (сама полоса по которой бегает ползунок) */
+.ui-slider-horizontal {
+	height: 12px;
+}
+/* позиционируем ползунки */
+.ui-slider-horizontal .ui-slider-handle {
+	top: -5px;
+	margin-left: -6px;
+}
+.ui-slider-horizontal .ui-slider-range {
+	top: 0;
+	height: 100%;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+	left: 0;
+}
+.ui-slider-horizontal .ui-slider-range-max {
+	right: 0;
+}
+/* оформление полосы по которой ходит ползунок */
+.ui-widget-content {
+	border: 1px solid #D4D4D4;
+	background: #fff;
+}
+/* оформление активного участка (между двумя ползунками) */
+.ui-widget-header {
+	border: 1px solid #D4D4D4;
+	background: #1e98ff;
+}
+/* скругление для полосы слайдера */
+.ui-corner-all {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}

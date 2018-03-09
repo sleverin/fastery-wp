@@ -1,0 +1,51 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5337ca878425084072f6efaf51b47243",
+    "packages": [
+        {
+            "name": "teamignet/dt-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/teamignet/dt-core.git",
+                "reference": "add77300ce779aa864c921feb4aaa31ae443d4a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/teamignet/dt-core/get/add77300ce779aa864c921feb4aaa31ae443d4a4.zip",
+                "reference": "add77300ce779aa864c921feb4aaa31ae443d4a4",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ignet\\WP\\Dev_Toolkit\\": [
+                        "/src/controllers",
+                        "/src/models",
+                        "/src/helpers"
+                    ]
+                }
+            },
+            "homepage": "https://bitbucket.org/teamignet/dt-core",
+            "support": {
+                "source": "https://bitbucket.org/teamignet/dt-core/src/add77300ce779aa864c921feb4aaa31ae443d4a4/?at=master",
+                "issues": "https://bitbucket.org/teamignet/dt-core/issues"
+            },
+            "time": "2017-09-05T09:11:56+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "teamignet/dt-core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

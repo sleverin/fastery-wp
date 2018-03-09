@@ -1,0 +1,11 @@
+{
+  "require": {
+    "teamignet/dt-core": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "https://bitbucket.org/teamignet/dt-core"
+    }
+  ]
+}
