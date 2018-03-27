@@ -82,8 +82,8 @@ class FasteryApi
             $body = json_decode($tuData);
         }
 
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/fastery.log', $url . "\n\n", FILE_APPEND | LOCK_EX);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/fastery.log', $tuData . "\n\n", FILE_APPEND | LOCK_EX);
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/fastery.log', $url . "\n\n", FILE_APPEND | LOCK_EX);
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/fastery.log', $tuData . "\n\n", FILE_APPEND | LOCK_EX);
 
         if (isset($body->items)) {
             $items = $body->items;

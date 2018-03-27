@@ -320,10 +320,8 @@ class EventsManager
 
         foreach ($items as $item) {
             $product = $item->get_product();
-            $name = $item->get_name();
             $weight = $product->get_weight();
             $weight = ('' != $weight || $weight) ? $weight : $fastery_settings['default_weight'];
-            $quantity = $item->get_quantity();
             $price = $product->get_price();
             $product = [
                 'name' => $item->get_name(),
