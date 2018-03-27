@@ -1,0 +1,12 @@
+{
+  "name": "teamignet/dt-core",
+  "autoload": {
+    "psr-4": {
+      "Ignet\\WP\\Dev_Toolkit\\": [
+        "/src/controllers",
+        "/src/models",
+        "/src/helpers"
+      ]
+    }
+  }
+}

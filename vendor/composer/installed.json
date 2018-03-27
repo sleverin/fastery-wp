@@ -1,0 +1,35 @@
+[
+    {
+        "name": "teamignet/dt-core",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://bitbucket.org/teamignet/dt-core.git",
+            "reference": "add77300ce779aa864c921feb4aaa31ae443d4a4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://bitbucket.org/teamignet/dt-core/get/add77300ce779aa864c921feb4aaa31ae443d4a4.zip",
+            "reference": "add77300ce779aa864c921feb4aaa31ae443d4a4",
+            "shasum": ""
+        },
+        "time": "2017-09-05T09:11:56+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ignet\\WP\\Dev_Toolkit\\": [
+                    "/src/controllers",
+                    "/src/models",
+                    "/src/helpers"
+                ]
+            }
+        },
+        "homepage": "https://bitbucket.org/teamignet/dt-core",
+        "support": {
+            "source": "https://bitbucket.org/teamignet/dt-core/src/add77300ce779aa864c921feb4aaa31ae443d4a4/?at=master",
+            "issues": "https://bitbucket.org/teamignet/dt-core/issues"
+        }
+    }
+]
