@@ -1,5 +1,4 @@
 <?php
-
 namespace Ignet\Wc\Fastery\Plugin;
 
 use Ignet\WP\Dev_Toolkit\Plugin;
@@ -10,7 +9,6 @@ use Ignet\WP\Dev_Toolkit\Plugin;
  */
 class CartManager
 {
-
     /**
      * @var Plugin
      */
@@ -37,27 +35,24 @@ class CartManager
         if ($pvz) {
             WC()->customer->set_billing_address_1($pvz);
         }
+
         $cost = isset($_REQUEST['ignet_fastery_cost']) ? $_REQUEST['ignet_fastery_cost'] : '';
         if ($cost) {
-
             WC()->session->set('ignet_fastery_cost', $cost);
         }
 
         $weight = isset($_REQUEST['ignet_cart_weight']) ? $_REQUEST['ignet_cart_weight'] : '';
         if ($weight) {
-
             WC()->session->set('ignet_cart_weight', $weight);
         }
 
         $uid = isset($_REQUEST['ignet_fastery_uid']) ? $_REQUEST['ignet_fastery_uid'] : '';
         if ($uid) {
-
             WC()->session->set('ignet_fastery_uid', $uid);
         }
 
         $delivery_term = isset($_REQUEST['ignet_fastery_delivery_term']) ? $_REQUEST['ignet_fastery_delivery_term'] : '';
         if ($delivery_term) {
-
             WC()->session->set('ignet_fastery_delivery_term', $delivery_term);
         }
     }
@@ -86,16 +81,13 @@ class CartManager
      */
     public function checkout_update_order_meta($order_id)
     {
-
         $chosen_methods = WC()->session->get('chosen_shipping_methods');
         $chosen_shipping = $chosen_methods[0];
 
         if ('fastery' == $chosen_shipping && !empty($_POST['ignet_fastery_uid'])) {
-
             update_post_meta($order_id, 'ignet_fastery_uid', sanitize_text_field($_POST['ignet_fastery_uid']));
         }
         if ('fastery_courier' == $chosen_shipping || 'fastery_mail' == $chosen_shipping) {
-
             $ignet_fastery_uid = WC()->session->get('ignet_' . $chosen_shipping . '_uid');
             update_post_meta($order_id, 'ignet_fastery_uid', sanitize_text_field($ignet_fastery_uid));
         }
@@ -106,7 +98,6 @@ class CartManager
      */
     public function validate_proceed_to_checkout()
     {
-
         $chosen_methods = WC()->session->get('chosen_shipping_methods');
         $chosen_shipping = $chosen_methods[0];
         if ('fastery' == $chosen_shipping) {
@@ -139,21 +130,17 @@ class CartManager
      */
     public function validate_checkout_fields()
     {
-
         $chosen_methods = WC()->session->get('chosen_shipping_methods');
         $chosen_shipping = $chosen_methods[0];
         if ('fastery_courier' == $chosen_shipping || 'fastery_mail' == $chosen_shipping) {
-
             $ignet_fastery_uid = WC()->session->get('ignet_' . $chosen_shipping . '_uid');
         }
 
         if ('fastery' == $chosen_shipping) {
-
             $ignet_fastery_uid = $_POST['ignet_fastery_uid'];
         }
 
         if (!$ignet_fastery_uid || '' == $ignet_fastery_uid) {
-
             wc_add_notice('Вы не рассчитали стоимость доставки для данного метода - ' . $ignet_fastery_uid, 'error');
         }
     }
@@ -163,10 +150,8 @@ class CartManager
      */
     public function save_cost()
     {
-
         $cost = $_POST['cost'];
         WC()->session->set('ignet_fastery_cost', $cost);
-
         wp_send_json($cost);
     }
 }

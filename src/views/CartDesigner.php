@@ -33,9 +33,11 @@ class CartDesigner
      */
     public function load_scripts()
     {
+
         wp_enqueue_style('multirange-style', $this->plugin->get('url') . 'assets/libs/multirange/multirange.css');
         wp_enqueue_script('multirange-script', $this->plugin->get('url') . 'assets/libs/multirange/multirange.js');
         wp_enqueue_script('jquery-ui-script', $this->plugin->get('url') . 'assets/libs/jquery-ui/jquery-ui.js');
+        wp_enqueue_script('jquery-ui-script', $this->plugin->get('url') . 'assets/libs/js.cookie.js');
     }
 
     /**
@@ -65,7 +67,6 @@ class CartDesigner
      */
     public function display_map($content)
     {
-
         $content .= '<div id="ignet-map-inner" class="ignet-modal">' .
             '<div  class="ignet-modal-content">' .
             '<p class="ignet-close-modal-inner"><span class="ignet-close-modal">&times;</span></p>' .
@@ -79,18 +80,16 @@ class CartDesigner
             '</div>' .
             '</div>' .
             '</div>';
-
         return $content;
     }
 
-    /**s
+    /**
      * Добавление скрытых полей в заказ
      *
      * @param $checkout
      */
     public function add_checkout_field($checkout)
     {
-
         woocommerce_form_field('ignet_fastery_uid', [
             'type' => 'text',
             'class' => ['my-field-class form-row-wide ignet_fastery_uid_hidden'],
@@ -104,7 +103,6 @@ class CartDesigner
      */
     public function add_block_select_pvz()
     {
-
         $weight = 0;
         $cost = 0;
         $cart_data = WC()->cart->get_cart();
@@ -120,10 +118,11 @@ class CartDesigner
         }
 
         echo '<tr>' .
-            '<th>Пункт выдачи</th>' .
-            '<td>' .
-            // '<span>' . WC()->customer->get_billing_address_1() .'</span><br>' .
-            '<span id="ignet-open-map" class="ignet-open-modal">Выбрать на карте</span>' .
+        '<th>Пункт выдачи</th>' .
+        '<td>';
+        // '<span>' . WC()->customer->get_billing_address_1() .'</span><br>' 
+
+        echo '<span id="ignet-open-map" class="ignet-open-modal">Выбрать на карте</span>' .
             '<input id="calc_shipping_city" name="calc_shipping_city" type="hidden" value="' . WC()->customer->get_billing_city() . '">' .
             '<input id="ignet_cart_cost" name="ignet_cart_cost" type="hidden" value="' . $cost . '">' .
             '<input id="ignet_cart_weight" name="ignet_cart_weight" type="hidden" value="' . WC()->session->get('ignet_cart_weight') . '">' .
@@ -148,7 +147,6 @@ class CartDesigner
     public function render_metabox()
     {
         global $post;
-
         $post_id = $post->ID;
         echo ViewHelper::get_file_output($this->plugin->get('dir') . '/src/templates/fastery-metabox.php', [
             'post_id' => $post_id
@@ -162,12 +160,10 @@ class CartDesigner
      */
     public function add_billing_data($checkout)
     {
-
         $chosen_methods = WC()->session->get('chosen_shipping_methods');
         $chosen_shipping = $chosen_methods[0];
         $ignet_fastery_uid = '';
         if ('fastery' == $chosen_shipping) {
-
             $ignet_fastery_uid = WC()->session->get('ignet_fastery_uid');
         }
         echo '<input type="hidden" class="input-text " name="ignet_fastery_uid" id="ignet_fastery_uid" value="' . $ignet_fastery_uid . '">';

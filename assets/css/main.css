@@ -186,3 +186,7 @@
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
+
+#calc_fastery_pvz_field, #calc_fastery_cost, #calc_fastery_delivery_term {
+	margin-bottom: 0px;
+}

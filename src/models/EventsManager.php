@@ -1,5 +1,4 @@
 <?php
-
 namespace Ignet\Wc\Fastery\Plugin;
 
 use Ignet\WP\Dev_Toolkit\Plugin;
@@ -7,7 +6,6 @@ use Ignet\WP\Dev_Toolkit\ViewHelper;
 
 class EventsManager
 {
-
     /**
      * @var Plugin
      */
@@ -30,7 +28,6 @@ class EventsManager
      */
     public function __construct(Plugin $plugin)
     {
-
         $this->plugin = $plugin;
     }
 
@@ -39,9 +36,7 @@ class EventsManager
      */
     public function load_scripts()
     {
-
         wp_enqueue_style($this->plugin->get('prefix') . 'style', $this->plugin->get('url') . '/assets/css/main.css');
-
         wp_enqueue_script('api-maps-yandex', 'https://api-maps.yandex.ru/2.1/?lang=ru_RU');
         wp_enqueue_script('events-handle-scripts', $this->plugin->get('url') . '/assets/js/events-handle-scripts.js', [
             'jquery',
@@ -58,7 +53,6 @@ class EventsManager
      */
     public function load_admin_scripts()
     {
-
         wp_enqueue_script('admin-handle-scripts', $this->plugin->get('url') . '/assets/js/admin-handle-scripts.js', [
             'jquery'
         ]);
@@ -73,7 +67,6 @@ class EventsManager
      */
     public function shipping_method_init()
     {
-
         ViewHelper::get_file_output($this->plugin->get('dir') . '/src/models/FasteryShippingMethod.php', []);
     }
 
@@ -86,9 +79,7 @@ class EventsManager
      */
     public function add_shipping_method($methods)
     {
-
         $methods[] = 'FasteryShippingMethod';
-
         return $methods;
     }
 
@@ -97,7 +88,6 @@ class EventsManager
      */
     public function calculate_deliveries()
     {
-
         $result = [];
         $city = $_POST['city'];
         $cost = $_POST['cost'];
@@ -107,10 +97,8 @@ class EventsManager
 
         // Есть ли в кеше данные
         if (isset($points_cache[$key])) {
-
             $result = $points_cache[$key];
         } else {
-
             // Отправим запрос в Fastery
             $fastery_settings = get_option('woocommerce_fastery_settings');
             $access_token = $fastery_settings['access_token'];
@@ -124,9 +112,7 @@ class EventsManager
             $cour_item = [];
             $addresses = [];
             $cour_flag = false;
-
             foreach ($items as $item) {
-
                 if ('point' == $item->type) {
                     $latlng = $item->lat . $item->lng;
                     if (isset($addresses[$latlng])) {
@@ -143,10 +129,8 @@ class EventsManager
                 if ('mail' == $item->type) {
                     $mail_item = $item;
                 }
-
                 if ('courier' == $item->type) {
                     if (!$cour_flag) {
-
                         $cour_item = $item;
                         $cour_flag = true;
                     }
@@ -170,24 +154,19 @@ class EventsManager
      */
     public function handle_fastery_orders()
     {
-
         $action = $_POST['fastery_action'];
         $order_id = $_POST['order_id'];
-
         $order = new \WC_Order($order_id);
         $shipping_method = array_shift($order->get_shipping_methods());
         $shipping_method_id = $shipping_method['method_id'];
         $shipping_methods = ['fastery', 'fastery_mail', 'fastery_courier'];
         if (!in_array($shipping_method_id, $shipping_methods)) {
-
             return;
         }
 
         if ('update' == $action) {
-
             $result = $this->update_order($order_id);
         } else {
-
             $result = $this->create_order($order_id);
         }
 
@@ -206,19 +185,16 @@ class EventsManager
      */
     public function order_create_handle($order_id, $posted)
     {
-
         $order = new \WC_Order($order_id);
         $shipping_method = array_shift($order->get_shipping_methods());
         $shipping_method_id = $shipping_method['method_id'];
         $shipping_methods = ['fastery', 'fastery_mail', 'fastery_courier'];
         if (!in_array($shipping_method_id, $shipping_methods)) {
-
             return;
         }
 
         $fastery_settings = get_option('woocommerce_fastery_settings');
         if ($fastery_settings['delayed_order_send'] != 'yes') {
-
             $this->create_order($order_id);
         }
     }
@@ -230,13 +206,11 @@ class EventsManager
      */
     public function order_paid_handle($order_id)
     {
-
         $order = new \WC_Order($order_id);
         $shipping_method = array_shift($order->get_shipping_methods());
         $shipping_method_id = $shipping_method['method_id'];
         $shipping_methods = ['fastery', 'fastery_mail', 'fastery_courier'];
         if (!in_array($shipping_method_id, $shipping_methods)) {
-
             return;
         }
 
@@ -244,10 +218,8 @@ class EventsManager
         $status = get_post_meta($order_id, 'fastery_status', 1);
 
         if ($fastery_settings['delayed_order_send'] == 'yes' && 'send' != $status) {
-
             $this->create_order($order_id);
         } else {
-
             $this->update_order($order_id);
         }
     }
@@ -261,7 +233,6 @@ class EventsManager
      */
     public function create_order($order_id)
     {
-
         $fastery_settings = get_option('woocommerce_fastery_settings');
         $fasteryApi = new FasteryApi($fastery_settings['access_token'], $fastery_settings['shop_id'], $fastery_settings['demo_mode']);
         $request_body = $this->generate_request_body($order_id);
@@ -269,8 +240,12 @@ class EventsManager
         $result = $fasteryApi->create_order($request_body);
         if (!is_wp_error($result)) {
 
-            if (isset($result['id'])) {
+            setcookie("fastery-uid", "", time() - 3600);
+            setcookie("fastery-min-term", "", time() - 3600);
+            setcookie("fastery-address", "", time() - 3600);
+            setcookie("fastery-cost", "", time() - 3600);
 
+            if (isset($result['id'])) {
                 update_post_meta($order_id, 'fastery_status', 'send');
                 update_post_meta($order_id, 'ignet_fastery_order_id', $result['id']);
                 update_post_meta($order_id, 'ignet_fastery_payment_method', $result['payment_method']);
@@ -278,13 +253,10 @@ class EventsManager
             }
 
             if (isset($result['errors'])) {
-
                 update_post_meta($order_id, 'fastery_errors', $result['errors']);
             }
-
             return $result;
         } else {
-
             return $result->get_error_message();
         }
     }
@@ -298,7 +270,6 @@ class EventsManager
      */
     public function update_order($order_id)
     {
-
         $fastery_settings = get_option('woocommerce_fastery_settings');
         $fasteryApi = new FasteryApi($fastery_settings['access_token'], $fastery_settings['shop_id'], $fastery_settings['demo_mode']);
         $fastery_id = get_post_meta($order_id, 'ignet_fastery_order_id', 1);
@@ -307,19 +278,21 @@ class EventsManager
         $result = $fasteryApi->update_order($fastery_id, $request_body);
         if (!is_wp_error($result)) {
 
-            if (isset($result['id'])) {
+            setcookie("fastery-uid", "", time() - 3600);
+            setcookie("fastery-min-term", "", time() - 3600);
+            setcookie("fastery-address", "", time() - 3600);
+            setcookie("fastery-cost", "", time() - 3600);
 
+            if (isset($result['id'])) {
                 update_post_meta($order_id, 'ignet_fastery_payment_method', $result['payment_method']);
                 delete_post_meta($order_id, 'fastery_errors');
             }
 
             if (isset($result['errors'])) {
-
                 update_post_meta($order_id, 'fastery_errors', $result['errors']);
             }
             return $result;
         } else {
-
             return $result->get_error_message();
         }
     }
@@ -328,22 +301,24 @@ class EventsManager
      * Генерируем тело запроса
      *
      * @param $order_id
+     * @return array
      */
     public function generate_request_body($order_id)
     {
-
         $products = [];
         $order = new \WC_Order($order_id);
         $items = $order->get_items();
         $fastery_settings = get_option('woocommerce_fastery_settings');
 
         $address = $order->get_billing_address_1();
-        $address_data = explode(', ', $address);
-        $street = isset($address_data[0]) ? $address_data[0] : '';
-        $house = isset($address_data[1]) ? $address_data[1] : '';
+        $address2 = $order->get_billing_address_2();
+        if ($address2 != '') {
+            $address .= ', ' . $address2;
+        }
+        $street = $address;
+        $house = '-';
 
         foreach ($items as $item) {
-
             $product = $item->get_product();
             $name = $item->get_name();
             $weight = $product->get_weight();
@@ -352,12 +327,11 @@ class EventsManager
             $price = $product->get_price();
             $product = [
                 'name' => $item->get_name(),
-                'barcode' => $product->get_id(),
+                'barcode' => $product->get_sku() ? $product->get_sku() : $product->get_id(),
                 'quantity' => $item->get_quantity(),
                 'price' => $price,
-                'weight' => $weight * 100
+                'weight' => $weight * 1000
             ];
-
             array_push($products, $product);
         }
 
@@ -384,10 +358,8 @@ class EventsManager
         $payment_method = $order->get_payment_method();
         $order_status = $order->get_status();
         if (in_array($order_status, ['processing']) && 'cod' != $payment_method) {
-
             $data['payment_method'] = 'noPay';
         }
-
         return $data;
     }
 
@@ -396,9 +368,7 @@ class EventsManager
      */
     public function clear_cashe()
     {
-
         delete_option('fastery_pvz_points');
-
         wp_send_json('ok');
     }
 }
